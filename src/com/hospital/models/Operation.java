@@ -1,8 +1,90 @@
 package com.hospital.models;
 
+import java.time.LocalDateTime;
+
 public class Operation {
 
-	// Une opération sera dans un hopital, dans une salle spécifique, et géré par un médecin X qui fait partie de l'hopital :)
+    private String description ;
+    private float price;
+    private LocalDateTime dateTimeOperation;
+    private Doctor doctor;
+    private Patient patient;
+    private Hospital hospital;
+    private Room room;
+
+    public  Operation(){
+
+
+    }
+    public Operation(String description,float price,LocalDateTime dateTimeOperation,Doctor doctor,Patient patient, Hospital hospital,Room room){
+        this.setDescription(description);
+        this.setPrice(price);
+        this.setDateTimeOperation(dateTimeOperation);
+        this.setDoctor(doctor);
+        this.setPatient(patient);
+        this.setHospital(hospital);
+        this.setRoom(room);
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public float getPrice() {
+        return price;
+    }
+
+    public void setPrice(float price) {
+        this.price = price;
+    }
+
+    public LocalDateTime getDateTimeOperation() {
+        return dateTimeOperation;
+    }
+
+    public void setDateTimeOperation(LocalDateTime dateTimeOperation) {
+        this.dateTimeOperation = dateTimeOperation;
+    }
+
+    public Doctor getDoctor() {
+        return doctor;
+    }
+
+    public void setDoctor(Doctor doctor) {
+        this.doctor = doctor;
+    }
+
+    public Patient getPatient() {
+        return patient;
+    }
+
+    public void setPatient(Patient patient) {
+        this.patient = patient;
+    }
+
+    public Hospital getHospital() {
+        return hospital;
+    }
+
+    public void setHospital(Hospital hospital) {
+        this.hospital = hospital;
+    }
+
+    public Room getRoom() {
+        return room;
+    }
+
+    public void setRoom(Room room) {
+        this.room = room;
+    }
+
+
+    // Une opération sera dans un hopital dans une salle spécifique et géré par un médecin X qui fait partie de l'hopital :)
+
 	
 	// Il faut vérifier l'assurance du patient avant de passer l'opération
 	
