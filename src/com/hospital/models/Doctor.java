@@ -1,16 +1,20 @@
 package com.hospital.models;
 
+import java.util.List;
+
 public class Doctor extends Person{
 
 	private String professionNumber;
 	private TimeSlot shiftSlot;
 	private double salary;
+	private List<Nurse> nurses ;
 	
-	public Doctor(String professionNumber,TimeSlot shiftSlot,double salary) {
+	public Doctor(String professionNumber,TimeSlot shiftSlot,double salary,List<Nurse> nurses) {
 		super();
-		this.professionNumber = professionNumber;
-		this.shiftSlot = shiftSlot;
-		this.salary = salary;
+		this.setProfessionNumber(professionNumber);
+		this.setShiftSlot(shiftSlot);
+		this.setSalary(salary);
+		this.setNurses(nurses);
 	}
 
 	public String getProfessionNumber() {
@@ -39,7 +43,14 @@ public class Doctor extends Person{
 
 	@Override
 	public String toString() {
-		return "Doctor [professionNumber=" + professionNumber + ", shiftSlot=" + shiftSlot + ", salary=" + salary + "]";
+		return "Doctor [professionNumber=" + getProfessionNumber() + ", shiftSlot=" + getShiftSlot() + ", salary=" + getSalary() + "]";
 	}
-	
+
+	public List<Nurse> getNurses() {
+		return nurses;
+	}
+
+	public void setNurses(List<Nurse> nurses) {
+		this.nurses = nurses;
+	}
 }

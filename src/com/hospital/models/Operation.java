@@ -12,10 +12,8 @@ public class Operation {
     private Hospital hospital;
     private Room room;
 
-    public  Operation(){
+    public  Operation(){}
 
-
-    }
     public Operation(String description,float price,LocalDateTime dateTimeOperation,Doctor doctor,Patient patient, Hospital hospital,Room room){
         this.setDescription(description);
         this.setPrice(price);
