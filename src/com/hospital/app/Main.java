@@ -13,8 +13,10 @@ public class Main {
         PatientInterface p1 = new PatientImpl();
 
         Patient p = p1.addPatient();
+        p1.showPatient(p);
 
-        System.out.println(" patient number : "+p.getAffiliationNumber()+" Name : "+p.getFirstname()+" "+p.getLastname()+"date entre : "+p.getHospitalEntryDate()+" insurance type : "+p.getInsuranceType());
+
+
 
     }
 }

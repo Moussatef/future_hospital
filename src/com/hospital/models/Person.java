@@ -16,7 +16,7 @@ public class Person {
 		this.id = 1L + (long) (Math.random() * (10L - 1L));
 		this.firstname = firstname;
 		this.lastname = lastname;
-		this.phone = phone;
+		this.phone = "+212-6"+ phone;
 		this.address = address;
 	}
 

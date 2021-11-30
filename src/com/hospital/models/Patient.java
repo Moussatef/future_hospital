@@ -10,13 +10,15 @@ public class Patient extends Person{
 	private LocalDate hospitalEntryDate;
 	private String affiliationNumber;
 	private InsuranceType insuranceType;
+	private float portefeuille;
 
 	public Patient(){}
-	public Patient(LocalDate hospitalEntryDate,String affiliationNumber,InsuranceType insuranceType) {
+	public Patient(LocalDate hospitalEntryDate,String affiliationNumber,InsuranceType insuranceType,float portefeuille) {
 		super();
 		this.hospitalEntryDate = hospitalEntryDate;
 		this.affiliationNumber = affiliationNumber;
 		this.insuranceType = insuranceType;
+		this.portefeuille = portefeuille;
 	}
 
 	public LocalDate getHospitalEntryDate() {
@@ -47,5 +49,13 @@ public class Patient extends Person{
 	public String toString() {
 		return "Patient [hospitalEntryDate=" + hospitalEntryDate + ", affiliationNumber=" + affiliationNumber
 				+ ", insuranceType=" + insuranceType + "]";
-	}	
+	}
+
+	public float getPortefeuille() {
+		return portefeuille;
+	}
+
+	public void setPortefeuille(float portefeuille) {
+		this.portefeuille = portefeuille;
+	}
 }

@@ -10,14 +10,19 @@ public class OperationImpl implements OperationInterface{
 
     @Override
     public Optional<Operation> getOperationByRef(int ref) {
-        // TODO Auto-generated method stub
-        return null;
+        return Optional.empty();
     }
 
     @Override
-    public void addOperation(List<Operation> operations) {
-
+    public void showOperation(List<Operation> operations) {
 
     }
 
+    @Override
+    public Operation addOperation() {
+
+
+
+        return null;
+    }
 }
