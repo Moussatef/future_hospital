@@ -4,7 +4,8 @@ public enum InsuranceType {
 
     CNSS("CNSS"),
     RAMED("RAMED"),
-    CNOPS("CNOPS");
+    CNOPS("CNOPS"),
+    NONE("NONE");
 
     private String value;
 
