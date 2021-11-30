@@ -1,5 +1,7 @@
 package com.hospital.models;
 
+import com.hospital.enumerations.StatuType;
+
 import java.time.LocalDateTime;
 
 public class Operation {
@@ -7,10 +9,12 @@ public class Operation {
     private String description ;
     private float price;
     private LocalDateTime dateTimeOperation;
+    private TimeSlot timeShift;
     private Doctor doctor;
     private Patient patient;
     private Hospital hospital;
     private Room room;
+    private StatuType statu;
 
     public  Operation(){}
 
@@ -78,6 +82,22 @@ public class Operation {
 
     public void setRoom(Room room) {
         this.room = room;
+    }
+
+    public StatuType getStatu() {
+        return statu;
+    }
+
+    public void setStatu(StatuType statu) {
+        this.statu = statu;
+    }
+
+    public TimeSlot getTimeShift() {
+        return timeShift;
+    }
+
+    public void setTimeShift(TimeSlot timeShift) {
+        this.timeShift = timeShift;
     }
 
 

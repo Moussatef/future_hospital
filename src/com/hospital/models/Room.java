@@ -4,6 +4,7 @@ public class Room {
 
 	private int number;
 	private int stage;
+	private boolean available;
 	
 	public Room(int number,int stage) {
 		this.number = number;
@@ -29,5 +30,13 @@ public class Room {
 	@Override
 	public String toString() {
 		return "Room [number=" + number + ", stage=" + stage + "]";
+	}
+
+	public boolean isAvailable() {
+		return available;
+	}
+
+	public void setAvailable(boolean available) {
+		this.available = available;
 	}
 }

@@ -11,9 +11,7 @@ public class Main {
         System.out.println("ok");
 
         PatientInterface p1 = new PatientImpl();
-
-        Patient p = p1.addPatient();
-        p1.showPatient(p);
+        p1.showPatient(p1.addPatient());
 
 
 
