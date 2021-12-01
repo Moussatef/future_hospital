@@ -1,5 +1,7 @@
 package com.hospital.app;
 
+import com.hospital.Impl.OperationImpl;
+import com.hospital.interfaces.OperationInterface;
 import com.hospital.models.*;
 import com.sun.org.apache.bcel.internal.generic.LSTORE;
 
@@ -8,8 +10,23 @@ import java.util.List;
 
 public class ControllerOperation {
 
-    public List<Room> roomList = new ArrayList<>();
-    public Hospital hospital = new Hospital();
+
+
+    public List<Room> getRoomList(){
+         List<Room> roomList = new ArrayList<>();
+         roomList.add(new Room(1,1));
+         roomList.add(new Room(2,1));
+         roomList.add(new Room(3,1));
+         roomList.add(new Room(4,1));
+         roomList.add(new Room(5,1));
+         roomList.add(new Room(6,1));
+         roomList.add(new Room(7,1));
+
+        return roomList;
+    }
+    public Hospital getHospital(){
+        return new Hospital("MD6","Rabat",getDoctorList(),getRoomList());
+    }
 
 
     public List<Nurse> getNurseList(){
@@ -28,20 +45,21 @@ public class ControllerOperation {
     }
 
     public List<Doctor> getDoctorList(){
+        List<Nurse> nurses = getNurseList();
         List<Nurse> nurseList1 = new ArrayList<>();
-        nurseList1.add(getNurseList().get(0));
-        nurseList1.add(getNurseList().get(1));
-        nurseList1.add(getNurseList().get(2));
+        nurseList1.add(nurses.get(0));
+        nurseList1.add(nurses.get(1));
+        nurseList1.add(nurses.get(2));
 
         List<Nurse> nurseList2 = new ArrayList<>();
-        nurseList2.add(getNurseList().get(3));
-        nurseList2.add(getNurseList().get(4));
-        nurseList2.add(getNurseList().get(5));
+        nurseList2.add(nurses.get(3));
+        nurseList2.add(nurses.get(4));
+        nurseList2.add(nurses.get(5));
 
         List<Nurse> nurseList3 = new ArrayList<>();
-        nurseList3.add(getNurseList().get(6));
-        nurseList3.add(getNurseList().get(7));
-        nurseList3.add(getNurseList().get(8));
+        nurseList3.add(nurses.get(6));
+        nurseList3.add(nurses.get(7));
+        nurseList3.add(nurses.get(8));
 
 
         List<Doctor> doctorList = new ArrayList<>();
@@ -49,6 +67,13 @@ public class ControllerOperation {
         doctorList.add(new Doctor("Yassine","Bissaoui","692698656","Marrakeche","NM°_986009697",new TimeSlot(8,12),10_000,nurseList3));
         doctorList.add(new Doctor("OTHMAN","MOUSSATEF","637274172","SAFI","NM°_000978",new TimeSlot(10,12),100_000,nurseList1));
 
-    return doctorList;
+        return doctorList;
     }
+    public void doOperation(){
+        OperationInterface op = new OperationImpl();
+        op.addOperation(getHospital(),getDoctorList());
+
+    }
+
+
 }

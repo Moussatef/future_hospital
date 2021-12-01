@@ -1,16 +1,14 @@
 package com.hospital.Impl;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.Scanner;
 
 import com.hospital.interfaces.OperationInterface;
 import com.hospital.interfaces.PatientInterface;
-import com.hospital.models.Hospital;
-import com.hospital.models.Operation;
-import com.hospital.models.Patient;
-import com.hospital.models.TimeSlot;
+import com.hospital.models.*;
 
 public class OperationImpl implements OperationInterface{
     public int percentageRAMED = 80;
@@ -24,18 +22,60 @@ public class OperationImpl implements OperationInterface{
     }
 
     @Override
-    public void showOperation(List<Operation> operations) {
+    public void showOperations(List<Operation> operations) {
+
+    }
+    @Override
+    public void showOperation(Operation operation) {
+        float rembourse = 0;
+        if (operation.getPatient().getInsuranceType().toString().equals("CNSS"))
+            rembourse = (operation.getPrice() * percentageCNSS ) / 100;
+
+        if(operation.getPatient().getInsuranceType().toString().equals("CNOPS"))
+            rembourse = operation.getPrice();
+
+
+        System.out.println("Code Operation    : "+operation.getCodeOperation());
+        System.out.println("Description       : "+operation.getDescription()+"\t Date Operation    : "+operation.getDateTimeOperation());
+        System.out.println("Price             : "+operation.getPrice() );
+        System.out.println("Profession Number : "+operation.getDoctor().getProfessionNumber() + "\t Doctor Name       : "+operation.getDoctor().getLastname()+operation.getDoctor().getFirstname());
+        System.out.println("Affiliation Number: "+operation.getPatient().getAffiliationNumber()+"\t Patient Name      : "+operation.getPatient().getLastname().toUpperCase() + operation.getPatient().getFirstname().toUpperCase());
+        System.out.println("InsuranceType     : "+operation.getPatient().getInsuranceType());
+        System.out.println("Insurance reimbursed: "+rembourse +"DHs");
+        System.out.println("-----------------------------------------------------------------------------------");
 
     }
 
+    public Doctor getDoctor(Long ID,List<Doctor> d){
+        for (Doctor doctor:d){
+            if (doctor.getId().equals(ID)){
+                return doctor;
+            }
+        }
+        return null;
+
+
+    }
+
+    public void writDoctor(Doctor d){
+        System.out.println("ID                : "+d.getId());
+        System.out.println("profession Number : "+d.getProfessionNumber());
+        System.out.println("Name              : "+d.getFirstname().toUpperCase() + d.getLastname().toUpperCase() );
+        System.out.println("ShiftSlot         : "+d.getShiftSlot());
+        System.out.println("Phone Number      : "+d.getPhone());
+        System.out.println("Address           : "+d.getAddress());
+        System.out.println("------------------------------------------");
+    }
+
+
+
     @Override
-    public Operation addOperation(Hospital hospital) {
+    public Operation addOperation(Hospital hospital,List<Doctor> doctors) {
         PatientInterface p1 = new PatientImpl();
         Operation op = new Operation();
         op.setPatient(p1.addPatient());
         System.out.print("Writ a description for this operation : ");
         op.setDescription(scanner.next());
-
         op.setDateTimeOperation(LocalDateTime.now());
         System.out.println("Date Operation : "+ op.getDateTimeOperation());
         System.out.print("Price of operation : ");
@@ -49,7 +89,6 @@ public class OperationImpl implements OperationInterface{
                 continue;
             }
             break;
-
         }
         float oldPorteValue = op.getPatient().getPortefeuille();
         float newPorteValue = op.getPatient().getPortefeuille() - op.getPrice();
@@ -59,27 +98,16 @@ public class OperationImpl implements OperationInterface{
             float newPorteValueR = op.getPatient().getPortefeuille() -  ( (op.getPrice() * percentageRAMED ) / 100 );
             op.getPatient().setPortefeuille(newPorteValueR);
         }
-        while (true){
-            System.out.print("Hour start : ");
-            int startTime = Integer.parseInt(scanner.next());
-            System.out.print("Hour end : ");
-            int endTime =  Integer.parseInt(scanner.next());
-            if((startTime > 0 && startTime <= 12 && endTime > 0 && endTime <= 12) && startTime < endTime  ){
-                TimeSlot timeSlot = new TimeSlot(startTime,endTime);
-                op.setTimeShift(timeSlot);
-                break;
+        List<Doctor> doctorList = new ArrayList<>();
+
+        for (Doctor d : doctors){
+            if(d.getShiftSlot().getStartTime() > op.getDateTimeOperation().getHour() && d.getShiftSlot().getEndTime() < op.getDateTimeOperation().getHour()){
+                writDoctor(d);
+                doctorList.add(d);
             }
-
-            System.out.println("You may have trouble entering time!!! Enter again ");
-
         }
 
-
-
-
-
-
-
+        System.out.println("chose doctor from this list (write ID) : ");
 
 
 

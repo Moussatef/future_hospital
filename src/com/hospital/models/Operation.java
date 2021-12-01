@@ -3,13 +3,14 @@ package com.hospital.models;
 import com.hospital.enumerations.StatuType;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class Operation {
-
+    private String codeOperation;
     private String description ;
     private float price;
     private LocalDateTime dateTimeOperation;
-    private TimeSlot timeShift;
+
     private Doctor doctor;
     private Patient patient;
     private Hospital hospital;
@@ -19,6 +20,7 @@ public class Operation {
     public  Operation(){}
 
     public Operation(String description,float price,LocalDateTime dateTimeOperation,Doctor doctor,Patient patient, Hospital hospital,Room room){
+        this.setCodeOperation(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMddhhmmss"))+"_"+ (Math.random() *(100)));
         this.setDescription(description);
         this.setPrice(price);
         this.setDateTimeOperation(dateTimeOperation);
@@ -92,12 +94,12 @@ public class Operation {
         this.statu = statu;
     }
 
-    public TimeSlot getTimeShift() {
-        return timeShift;
+    public String getCodeOperation() {
+        return codeOperation;
     }
 
-    public void setTimeShift(TimeSlot timeShift) {
-        this.timeShift = timeShift;
+    public void setCodeOperation(String codeOperation) {
+        this.codeOperation = codeOperation;
     }
 
 
