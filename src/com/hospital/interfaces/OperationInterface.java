@@ -9,7 +9,7 @@ import java.util.List;
 
 public interface OperationInterface {
 
-    public Optional<Operation> getOperationByRef(int ref);
+    public Optional<Operation> getOperationByRef(String ref,List<Operation> operations);
 
     public void showOperations(List<Operation> operations);
     public void showOperation(Operation operations);

@@ -64,9 +64,9 @@ public class ControllerOperation {
 
 
         List<Doctor> doctorList = new ArrayList<>();
-        doctorList.add(new Doctor("Yassine","Bissaoui","692698656","Marrakeche","NM°_986298697",new TimeSlot(8,12),50_000,nurseList2));
-        doctorList.add(new Doctor("Yassine","Bissaoui","692698656","Marrakeche","NM°_986009697",new TimeSlot(8,12),10_000,nurseList3));
-        doctorList.add(new Doctor("OTHMAN","MOUSSATEF","637274172","SAFI","NM_000978",new TimeSlot(10,17),100_000,nurseList1));
+        doctorList.add(new Doctor("Yassine","Bissaoui","692698656","Marrakeche","NM_986298697",new TimeSlot(8,12),50_000,nurseList2));
+        doctorList.add(new Doctor("Yassine","Bissaoui","692698656","Marrakeche","NM_986009697",new TimeSlot(8,23),10_000,nurseList3));
+        doctorList.add(new Doctor("OTHMAN","MOUSSATEF","637274172","SAFI","NM_000978",new TimeSlot(10,23),100_000,nurseList1));
 
         return doctorList;
     }
@@ -81,7 +81,7 @@ public class ControllerOperation {
         System.out.println("________________________________****________________________________");
     }
     public void menuOperations(){
-        System.out.println("________________________________MENU Operation________________________________");
+        System.out.println("___________________________MENU Operation____________________________");
         System.out.println("1- View operations on Progress ");
         System.out.println("2- View operations Terminated with success");
         System.out.println("3- View operations Failed");
@@ -91,6 +91,7 @@ public class ControllerOperation {
     public void exeChose(){
         int chose =0;
         do {
+            System.out.println("\n\t\t\t\t\t-{ Welcome to Mohamed 6 Hospital }-\n\n");
             menu();
             System.out.print("Enter your chose : ");
             chose = Integer.parseInt(scanner.next());
@@ -108,6 +109,8 @@ public class ControllerOperation {
                     break;
                 case 5 :
                     System.out.println("5- View List rooms");
+                    break;
+                case 6 : System.out.println("{{{{# See you soon #}}}} ");
                     break;
 
                 default:

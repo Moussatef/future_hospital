@@ -46,7 +46,7 @@ public class PatientImpl implements PatientInterface {
         System.out.println("3 - "+InsuranceType.CNOPS);
         System.out.println("4 - "+InsuranceType.NONE);
         while (true){
-            System.out.print("Chose your insurance");
+            System.out.print("Chose your insurance : ");
             int chose = Integer.parseInt(scanner.next());
             if (chose >0 && chose<5){
                 InsuranceType insuranceTypev = insuranceType(chose);

@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Scanner;
 
+import com.hospital.enumerations.StatuType;
 import com.hospital.interfaces.OperationInterface;
 import com.hospital.interfaces.PatientInterface;
 import com.hospital.models.*;
@@ -18,7 +19,12 @@ public class OperationImpl implements OperationInterface{
     Scanner scanner = new Scanner(System.in);
 
     @Override
-    public Optional<Operation> getOperationByRef(int ref) {
+    public Optional<Operation> getOperationByRef(String ref,List<Operation> operations) {
+        for (Operation op:operations){
+            if(op.getCodeOperation().equals(ref)){
+                return Optional.of(op);
+            }
+        }
         return Optional.empty();
     }
 
@@ -31,21 +37,19 @@ public class OperationImpl implements OperationInterface{
         float rembourse = 0;
         if (operation.getPatient().getInsuranceType().toString().equals("CNSS"))
             rembourse = (operation.getPrice() * percentageCNSS ) / 100;
-
         if(operation.getPatient().getInsuranceType().toString().equals("CNOPS"))
             rembourse = operation.getPrice();
-
         System.out.println("Code Operation    : "+operation.getCodeOperation());
         System.out.println("Description       : "+operation.getDescription()+"\t Date Operation    : "+operation.getDateTimeOperation().format(DateTimeFormatter.ofPattern("dd-MM-yyyy hh:mm")));
         System.out.println("Price             : "+operation.getPrice() );
         System.out.println("________________________________Doctor Information________________________________");
         System.out.println("Profession Number : "+operation.getDoctor().getProfessionNumber() + "\t Doctor Name       : "+operation.getDoctor().getLastname()+" "+operation.getDoctor().getFirstname());
         System.out.println("__________________________________________________________________________________");
-        System.out.println("________________________________Patient Information________________________________");
+        System.out.println("________________________________Patient Information_______________________________");
         System.out.println("Affiliation Number: "+operation.getPatient().getAffiliationNumber()+"\t Patient Name      : "+operation.getPatient().getLastname().toUpperCase() +" "+ operation.getPatient().getFirstname().toUpperCase());
         System.out.println("InsuranceType     : "+operation.getPatient().getInsuranceType());
         System.out.println("Insurance reimbursed: "+rembourse +"DHs");
-        System.out.println("-----------------------------------------------------------------------------------");
+        System.out.println("----------------------------------------------------------------------------------");
 
     }
 
@@ -64,10 +68,8 @@ public class OperationImpl implements OperationInterface{
         System.out.println("ShiftSlot         : From "+d.getShiftSlot().getStartTime() +" -TO- "+d.getShiftSlot().getEndTime());
         System.out.println("Phone Number      : "+d.getPhone());
         System.out.println("Address           : "+d.getAddress());
-        System.out.println("---------------------------------------------------------------");
+        System.out.println("--------------------------------------------------------------------");
     }
-
-
 
     @Override
     public Operation addOperation(Hospital hospital,List<Doctor> doctors) {
@@ -76,7 +78,8 @@ public class OperationImpl implements OperationInterface{
         PatientInterface p1 = new PatientImpl();
         Operation op = new Operation();
         op.setDateTimeOperation(LocalDateTime.now());
-        System.out.println("________________________________Doctors Available________________________________");
+        op.setStatu(StatuType.IN_PROGRESS);
+        System.out.println("_________________________Doctors Available__________________________");
         for (Doctor d : doctors){
             if(d.getShiftSlot().getStartTime() < op.getDateTimeOperation().getHour() && d.getShiftSlot().getEndTime() > op.getDateTimeOperation().getHour()){
                 writDoctor(d);
@@ -111,7 +114,7 @@ public class OperationImpl implements OperationInterface{
         }
 
         while (true){
-            System.out.println("chose doctor from  list Doctors (write profession Number ) : ");
+            System.out.print("chose doctor from list Doctors (write profession Number ) : ");
             String ID_doctor = scanner.next();
             if (getDoctor(ID_doctor,doctorList)!=null){
                 op.setDoctor(getDoctor(ID_doctor,doctorList));
@@ -120,8 +123,6 @@ public class OperationImpl implements OperationInterface{
             }
             System.out.println("This profession Number  : "+ID_doctor+" not in list Doctors svp try again !");
         }
-
-
 
         return op;
     }
