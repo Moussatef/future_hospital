@@ -28,15 +28,16 @@ public class PatientImpl implements PatientInterface {
     }
     @Override
     public Patient addPatient() {
+        System.out.println("--------------------{ Information Patient }-------------------- ");
         Patient p = new Patient();
         System.out.print("Entre first name : ");
-        p.setFirstname(scanner.next());
+        p.setFirstname(scanner.nextLine());
         System.out.print("Entre last name : ");
-        p.setLastname(scanner.next());
+        p.setLastname(scanner.nextLine());
         System.out.print("Entre address : ");
-        p.setAddress(scanner.next());
+        p.setAddress(scanner.nextLine());
         System.out.print("Entre phone number : +212-6");
-        p.setPhone(scanner.next());
+        p.setPhone(scanner.nextLine());
         LocalDate localDate = LocalDate.now();
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd-MM-yyyy");
         p.setHospitalEntryDate(localDate);
@@ -45,6 +46,7 @@ public class PatientImpl implements PatientInterface {
         System.out.println("3 - "+InsuranceType.CNOPS);
         System.out.println("4 - "+InsuranceType.NONE);
         while (true){
+            System.out.print("Chose your insurance");
             int chose = Integer.parseInt(scanner.next());
             if (chose >0 && chose<5){
                 InsuranceType insuranceTypev = insuranceType(chose);
@@ -52,7 +54,7 @@ public class PatientImpl implements PatientInterface {
                 break;
             }
         }
-        System.out.print("Entre your Porte feuille : $ ");
+        System.out.print("Entre your Porte feuille : DHs  ");
         p.setPortefeuille(Float.parseFloat(scanner.next()));
         LocalDateTime localDate1 = LocalDateTime.now();
         DateTimeFormatter dtf1 = DateTimeFormatter.ofPattern("ddMMyyyyhhmmss");

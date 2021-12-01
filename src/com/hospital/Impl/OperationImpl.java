@@ -1,6 +1,7 @@
 package com.hospital.Impl;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -34,52 +35,62 @@ public class OperationImpl implements OperationInterface{
         if(operation.getPatient().getInsuranceType().toString().equals("CNOPS"))
             rembourse = operation.getPrice();
 
-
         System.out.println("Code Operation    : "+operation.getCodeOperation());
-        System.out.println("Description       : "+operation.getDescription()+"\t Date Operation    : "+operation.getDateTimeOperation());
+        System.out.println("Description       : "+operation.getDescription()+"\t Date Operation    : "+operation.getDateTimeOperation().format(DateTimeFormatter.ofPattern("dd-MM-yyyy hh:mm")));
         System.out.println("Price             : "+operation.getPrice() );
-        System.out.println("Profession Number : "+operation.getDoctor().getProfessionNumber() + "\t Doctor Name       : "+operation.getDoctor().getLastname()+operation.getDoctor().getFirstname());
-        System.out.println("Affiliation Number: "+operation.getPatient().getAffiliationNumber()+"\t Patient Name      : "+operation.getPatient().getLastname().toUpperCase() + operation.getPatient().getFirstname().toUpperCase());
+        System.out.println("________________________________Doctor Information________________________________");
+        System.out.println("Profession Number : "+operation.getDoctor().getProfessionNumber() + "\t Doctor Name       : "+operation.getDoctor().getLastname()+" "+operation.getDoctor().getFirstname());
+        System.out.println("__________________________________________________________________________________");
+        System.out.println("________________________________Patient Information________________________________");
+        System.out.println("Affiliation Number: "+operation.getPatient().getAffiliationNumber()+"\t Patient Name      : "+operation.getPatient().getLastname().toUpperCase() +" "+ operation.getPatient().getFirstname().toUpperCase());
         System.out.println("InsuranceType     : "+operation.getPatient().getInsuranceType());
         System.out.println("Insurance reimbursed: "+rembourse +"DHs");
         System.out.println("-----------------------------------------------------------------------------------");
 
     }
 
-    public Doctor getDoctor(Long ID,List<Doctor> d){
+    public Doctor getDoctor(String ID,List<Doctor> d){
         for (Doctor doctor:d){
-            if (doctor.getId().equals(ID)){
+            if (doctor.getProfessionNumber().equals(ID)){
                 return doctor;
             }
         }
         return null;
-
-
     }
 
     public void writDoctor(Doctor d){
-        System.out.println("ID                : "+d.getId());
         System.out.println("profession Number : "+d.getProfessionNumber());
-        System.out.println("Name              : "+d.getFirstname().toUpperCase() + d.getLastname().toUpperCase() );
-        System.out.println("ShiftSlot         : "+d.getShiftSlot());
+        System.out.println("Name              : "+d.getFirstname().toUpperCase() +" "+  d.getLastname().toUpperCase() );
+        System.out.println("ShiftSlot         : From "+d.getShiftSlot().getStartTime() +" -TO- "+d.getShiftSlot().getEndTime());
         System.out.println("Phone Number      : "+d.getPhone());
         System.out.println("Address           : "+d.getAddress());
-        System.out.println("------------------------------------------");
+        System.out.println("---------------------------------------------------------------");
     }
 
 
 
     @Override
     public Operation addOperation(Hospital hospital,List<Doctor> doctors) {
+        List<Doctor> doctorList = new ArrayList<>();
+
         PatientInterface p1 = new PatientImpl();
         Operation op = new Operation();
+        op.setDateTimeOperation(LocalDateTime.now());
+        System.out.println("________________________________Doctors Available________________________________");
+        for (Doctor d : doctors){
+            if(d.getShiftSlot().getStartTime() < op.getDateTimeOperation().getHour() && d.getShiftSlot().getEndTime() > op.getDateTimeOperation().getHour()){
+                writDoctor(d);
+                doctorList.add(d);
+            }
+        }
+        op.setCodeOperation();
         op.setPatient(p1.addPatient());
         System.out.print("Writ a description for this operation : ");
-        op.setDescription(scanner.next());
-        op.setDateTimeOperation(LocalDateTime.now());
-        System.out.println("Date Operation : "+ op.getDateTimeOperation());
+        op.setDescription(scanner.nextLine());
+
+        System.out.println("Date Operation : "+ op.getDateTimeOperation().format(DateTimeFormatter.ofPattern("dd-MM-yyyy hh:mm")));
         System.out.print("Price of operation : ");
-        op.setPrice(Float.parseFloat(scanner.next()));
+        op.setPrice(Float.parseFloat(scanner.nextLine()));
         while(true){
             if(op.getPatient().getPortefeuille() < op.getPrice()){
                 System.out.println("warning !!!! the portefeuille is not enough !! ");
@@ -98,16 +109,21 @@ public class OperationImpl implements OperationInterface{
             float newPorteValueR = op.getPatient().getPortefeuille() -  ( (op.getPrice() * percentageRAMED ) / 100 );
             op.getPatient().setPortefeuille(newPorteValueR);
         }
-        List<Doctor> doctorList = new ArrayList<>();
 
-        for (Doctor d : doctors){
-            if(d.getShiftSlot().getStartTime() > op.getDateTimeOperation().getHour() && d.getShiftSlot().getEndTime() < op.getDateTimeOperation().getHour()){
-                writDoctor(d);
-                doctorList.add(d);
+
+
+        while (true){
+            System.out.println("chose doctor from  list Doctors (write profession Number ) : ");
+            String ID_doctor = scanner.next();
+            if (getDoctor(ID_doctor,doctorList)!=null){
+                op.setDoctor(getDoctor(ID_doctor,doctorList));
+                break;
+
             }
+            System.out.println("This profession Number  : "+ID_doctor+" not in list Doctors svp try again !");
         }
 
-        System.out.println("chose doctor from this list (write ID) : ");
+
 
 
 

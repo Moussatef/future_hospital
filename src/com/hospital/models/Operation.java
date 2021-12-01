@@ -20,7 +20,7 @@ public class Operation {
     public  Operation(){}
 
     public Operation(String description,float price,LocalDateTime dateTimeOperation,Doctor doctor,Patient patient, Hospital hospital,Room room){
-        this.setCodeOperation(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMddhhmmss"))+"_"+ (Math.random() *(100)));
+        this.setCodeOperation();
         this.setDescription(description);
         this.setPrice(price);
         this.setDateTimeOperation(dateTimeOperation);
@@ -98,8 +98,8 @@ public class Operation {
         return codeOperation;
     }
 
-    public void setCodeOperation(String codeOperation) {
-        this.codeOperation = codeOperation;
+    public void setCodeOperation() {
+        this.codeOperation = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMddhhmmss"))+"_"+ (Math.random() *(100));
     }
 
 

@@ -11,7 +11,6 @@ import java.util.List;
 public class ControllerOperation {
 
 
-
     public List<Room> getRoomList(){
          List<Room> roomList = new ArrayList<>();
          roomList.add(new Room(1,1));
@@ -65,13 +64,16 @@ public class ControllerOperation {
         List<Doctor> doctorList = new ArrayList<>();
         doctorList.add(new Doctor("Yassine","Bissaoui","692698656","Marrakeche","NM°_986298697",new TimeSlot(8,12),50_000,nurseList2));
         doctorList.add(new Doctor("Yassine","Bissaoui","692698656","Marrakeche","NM°_986009697",new TimeSlot(8,12),10_000,nurseList3));
-        doctorList.add(new Doctor("OTHMAN","MOUSSATEF","637274172","SAFI","NM°_000978",new TimeSlot(10,12),100_000,nurseList1));
+        doctorList.add(new Doctor("OTHMAN","MOUSSATEF","637274172","SAFI","NM_000978",new TimeSlot(10,17),100_000,nurseList1));
 
         return doctorList;
     }
     public void doOperation(){
         OperationInterface op = new OperationImpl();
-        op.addOperation(getHospital(),getDoctorList());
+        Operation operation = op.addOperation(getHospital(),getDoctorList());
+        System.out.println("________________________________Operation Information________________________________");
+        op.showOperation(operation);
+
 
     }
 
