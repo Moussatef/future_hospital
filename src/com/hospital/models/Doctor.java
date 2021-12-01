@@ -9,8 +9,8 @@ public class Doctor extends Person{
 	private double salary;
 	private List<Nurse> nurses ;
 	
-	public Doctor(String professionNumber,TimeSlot shiftSlot,double salary,List<Nurse> nurses) {
-		super();
+	public Doctor(String firstname,String lastname,String phone,String address,String professionNumber,TimeSlot shiftSlot,double salary,List<Nurse> nurses) {
+		super(firstname,lastname,phone,address);
 		this.setProfessionNumber(professionNumber);
 		this.setShiftSlot(shiftSlot);
 		this.setSalary(salary);

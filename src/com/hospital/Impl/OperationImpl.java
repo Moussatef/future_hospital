@@ -13,6 +13,9 @@ import com.hospital.models.Patient;
 import com.hospital.models.TimeSlot;
 
 public class OperationImpl implements OperationInterface{
+    public int percentageRAMED = 80;
+    public int percentageCNSS = 70;
+    public int percentageCNOPS = 100;
     Scanner scanner = new Scanner(System.in);
 
     @Override
@@ -30,8 +33,12 @@ public class OperationImpl implements OperationInterface{
         PatientInterface p1 = new PatientImpl();
         Operation op = new Operation();
         op.setPatient(p1.addPatient());
+        System.out.print("Writ a description for this operation : ");
         op.setDescription(scanner.next());
+
         op.setDateTimeOperation(LocalDateTime.now());
+        System.out.println("Date Operation : "+ op.getDateTimeOperation());
+        System.out.print("Price of operation : ");
         op.setPrice(Float.parseFloat(scanner.next()));
         while(true){
             if(op.getPatient().getPortefeuille() < op.getPrice()){
@@ -46,11 +53,26 @@ public class OperationImpl implements OperationInterface{
         }
         float oldPorteValue = op.getPatient().getPortefeuille();
         float newPorteValue = op.getPatient().getPortefeuille() - op.getPrice();
-        op.getPatient().setPortefeuille(newPorteValue);
-        int startTime = Integer.parseInt(scanner.next());
-        int endTime =  Integer.parseInt(scanner.next());
-        TimeSlot timeSlot = new TimeSlot(startTime,endTime);
-        op.setTimeShift(timeSlot);
+        if(!op.getPatient().getInsuranceType().toString().equals("RAMED"))
+            op.getPatient().setPortefeuille(newPorteValue);
+        else{
+            float newPorteValueR = op.getPatient().getPortefeuille() -  ( (op.getPrice() * percentageRAMED ) / 100 );
+            op.getPatient().setPortefeuille(newPorteValueR);
+        }
+        while (true){
+            System.out.print("Hour start : ");
+            int startTime = Integer.parseInt(scanner.next());
+            System.out.print("Hour end : ");
+            int endTime =  Integer.parseInt(scanner.next());
+            if((startTime > 0 && startTime <= 12 && endTime > 0 && endTime <= 12) && startTime < endTime  ){
+                TimeSlot timeSlot = new TimeSlot(startTime,endTime);
+                op.setTimeShift(timeSlot);
+                break;
+            }
+
+            System.out.println("You may have trouble entering time!!! Enter again ");
+
+        }
 
 
 
@@ -61,6 +83,9 @@ public class OperationImpl implements OperationInterface{
 
 
 
-        return null;
+
+
+
+        return op;
     }
 }
