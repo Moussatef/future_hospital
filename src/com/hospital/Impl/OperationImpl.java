@@ -110,8 +110,6 @@ public class OperationImpl implements OperationInterface{
             op.getPatient().setPortefeuille(newPorteValueR);
         }
 
-
-
         while (true){
             System.out.println("chose doctor from  list Doctors (write profession Number ) : ");
             String ID_doctor = scanner.next();
@@ -122,11 +120,6 @@ public class OperationImpl implements OperationInterface{
             }
             System.out.println("This profession Number  : "+ID_doctor+" not in list Doctors svp try again !");
         }
-
-
-
-
-
 
 
 

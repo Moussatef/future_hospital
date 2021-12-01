@@ -7,8 +7,10 @@ import com.sun.org.apache.bcel.internal.generic.LSTORE;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 public class ControllerOperation {
+    Scanner scanner = new Scanner(System.in);
 
 
     public List<Room> getRoomList(){
@@ -67,6 +69,53 @@ public class ControllerOperation {
         doctorList.add(new Doctor("OTHMAN","MOUSSATEF","637274172","SAFI","NM_000978",new TimeSlot(10,17),100_000,nurseList1));
 
         return doctorList;
+    }
+    public void menu(){
+        System.out.println("________________________________MENU________________________________");
+        System.out.println("1- Add operation");
+        System.out.println("2- View operations ");
+        System.out.println("3- View List Doctors");
+        System.out.println("4- View List nurse");
+        System.out.println("5- View List rooms");
+        System.out.println("6- Exit");
+        System.out.println("________________________________****________________________________");
+    }
+    public void menuOperations(){
+        System.out.println("________________________________MENU Operation________________________________");
+        System.out.println("1- View operations on Progress ");
+        System.out.println("2- View operations Terminated with success");
+        System.out.println("3- View operations Failed");
+        System.out.println("4- Return");
+        System.out.println("________________________________****________________________________");
+    }
+    public void exeChose(){
+        int chose =0;
+        do {
+            menu();
+            System.out.print("Enter your chose : ");
+            chose = Integer.parseInt(scanner.next());
+            switch (chose){
+                case 1 : doOperation();
+                break;
+                case 2 :
+                    System.out.println("Operations");
+                    break;
+                case 3   :
+                    System.out.println("3- View List Doctors");
+                    break;
+                case 4 :
+                    System.out.println("4- View List nurse");
+                    break;
+                case 5 :
+                    System.out.println("5- View List rooms");
+                    break;
+
+                default:
+                    break;
+
+            }
+
+        }while (chose !=6);
     }
     public void doOperation(){
         OperationInterface op = new OperationImpl();
