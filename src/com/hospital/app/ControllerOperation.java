@@ -100,6 +100,30 @@ public class ControllerOperation {
                 break;
                 case 2 :
                     System.out.println("Operations");
+                    int ch = 0;
+                    do{
+                        menuOperations();
+                        System.out.print("Enter your chose : ");
+                         ch = Integer.parseInt(scanner.next());
+                         switch (ch){
+                             case 1 :
+
+                                 break;
+                             case 2 :
+                                 break;
+                             case 3 :
+                                 break;
+                             case 4 :
+                                 System.out.println("back to menu ");
+                                 break;
+                             default:
+                                 System.out.println("This chose not in menu !! try again");
+                                 break;
+                         }
+
+
+                    }while (ch != 4);
+
                     break;
                 case 3   :
                     System.out.println("3- View List Doctors");

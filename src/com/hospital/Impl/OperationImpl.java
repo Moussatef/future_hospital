@@ -50,7 +50,6 @@ public class OperationImpl implements OperationInterface{
         System.out.println("InsuranceType     : "+operation.getPatient().getInsuranceType());
         System.out.println("Insurance reimbursed: "+rembourse +"DHs");
         System.out.println("----------------------------------------------------------------------------------");
-
     }
 
     public Doctor getDoctor(String ID,List<Doctor> d){
@@ -125,5 +124,38 @@ public class OperationImpl implements OperationInterface{
         }
 
         return op;
+    }
+
+    @Override
+    public List<Operation> operationInProgress(List<Operation> operations) {
+        List<Operation> operationList = new ArrayList<>();
+        for (Operation op : operations){
+            if (op.getStatu().toString().equals("IN_PROGRESS"))
+                operationList.add(op);
+        }
+
+        return operationList;
+    }
+
+    @Override
+    public List<Operation> operationSuccess(List<Operation> operations) {
+        List<Operation> operationList = new ArrayList<>();
+        for (Operation op : operations){
+            if (op.getStatu().toString().equals("DONE_SUCCESSFULLY"))
+                operationList.add(op);
+        }
+
+        return operationList;
+    }
+
+    @Override
+    public List<Operation> operationFailed(List<Operation> operations) {
+        List<Operation> operationList = new ArrayList<>();
+        for (Operation op : operations){
+            if (op.getStatu().toString().equals("FAILED"))
+                operationList.add(op);
+        }
+
+        return operationList;
     }
 }
