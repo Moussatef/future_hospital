@@ -11,6 +11,7 @@ import com.sun.org.apache.bcel.internal.generic.LSTORE;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.Scanner;
 
 public class ControllerOperation {
@@ -79,6 +80,14 @@ public class ControllerOperation {
 
         return doctorList;
     }
+    public void status(){
+        System.out.println("________________________________Status Type________________________________");
+        System.out.println("1- "+StatuType.DONE_SUCCESSFULLY);
+        System.out.println("2- "+StatuType.FAILED);
+        System.out.println("3- return back");
+        System.out.println("________________________________****________________________________");
+
+    }
     public void menu(){
         System.out.println("________________________________MENU________________________________");
         System.out.println("1- Add operation");
@@ -87,7 +96,8 @@ public class ControllerOperation {
         System.out.println("4- View List Patients");
         System.out.println("X- View List rooms");
         System.out.println("6- Transactions");
-        System.out.println("7- Exit");
+        System.out.println("7- Change operation status ");
+        System.out.println("8- Exit");
         System.out.println("________________________________****________________________________");
     }
     public void menuOperations(){
@@ -153,7 +163,17 @@ public class ControllerOperation {
                         for (Transaction tr : transactions)
                             System.out.println(tr.toString());
                     break;
-                case 7 : System.out.println("{{{{# See you soon #}}}} ");
+                case 7 :
+                        System.out.println("Change Operation status ");
+                        System.out.print("Operation reference : ");
+                        scanner.nextLine();
+                        String ref = scanner.nextLine();
+                        Operation operationfind = op.getOperationByRef(ref,this.operations);
+
+
+                         System.out.println(operationfind.getStatu());
+                    break;
+                case 8 : System.out.println("{{{{# See you soon #}}}} ");
                     break;
 
                 default:
@@ -164,7 +184,7 @@ public class ControllerOperation {
             }catch (Exception e){
                 System.out.println("Errer : "+e.getMessage());
             }
-        }while (chose !=7);
+        }while (chose !=8);
     }
     public void doOperation(){
 

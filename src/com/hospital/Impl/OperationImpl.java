@@ -20,13 +20,19 @@ public class OperationImpl implements OperationInterface, TransactionIntrf {
     Scanner scanner = new Scanner(System.in);
 
     @Override
-    public Optional<Operation> getOperationByRef(String ref,List<Operation> operations) {
+    public Operation getOperationByRef(String ref,List<Operation> operations) {
         for (Operation op:operations){
             if(op.getCodeOperation().equals(ref)){
-                return Optional.of(op);
+                return op;
             }
         }
-        return Optional.empty();
+        return null;
+    }
+
+    @Override
+    public Operation changeStatus(Operation op,StatuType st) {
+        op.setStatu(st);
+        return op;
     }
 
     @Override

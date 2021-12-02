@@ -1,5 +1,6 @@
 package com.hospital.interfaces;
 
+import com.hospital.enumerations.StatuType;
 import com.hospital.models.Doctor;
 import com.hospital.models.Hospital;
 import com.hospital.models.Operation;
@@ -11,7 +12,8 @@ import java.util.List;
 
 public interface OperationInterface {
 
-    public Optional<Operation> getOperationByRef(String ref,List<Operation> operations);
+    public Operation getOperationByRef(String ref,List<Operation> operations);
+    public Operation changeStatus(Operation op, StatuType statuType);
 
     public void showOperations(List<Operation> operations);
     public void showOperation(Operation operations);
