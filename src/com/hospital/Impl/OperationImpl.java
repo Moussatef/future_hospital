@@ -10,9 +10,10 @@ import java.util.Scanner;
 import com.hospital.enumerations.StatuType;
 import com.hospital.interfaces.OperationInterface;
 import com.hospital.interfaces.PatientInterface;
+import com.hospital.interfaces.TransactionIntrf;
 import com.hospital.models.*;
 
-public class OperationImpl implements OperationInterface{
+public class OperationImpl implements OperationInterface, TransactionIntrf {
     public int percentageRAMED = 80;
     public int percentageCNSS = 70;
     public int percentageCNOPS = 100;
@@ -145,7 +146,6 @@ public class OperationImpl implements OperationInterface{
 
     @Override
     public Transaction addTransaction(Operation operation) {
-
         return new Transaction(operation.getPrice(),operation.getCodeOperation(),operation.getPatient().getLastname().toUpperCase()+" "+operation.getPatient().getFirstname().toUpperCase());
     }
 

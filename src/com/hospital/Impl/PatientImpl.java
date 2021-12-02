@@ -28,38 +28,46 @@ public class PatientImpl implements PatientInterface {
     }
     @Override
     public Patient addPatient() {
-        System.out.println("--------------------{ Information Patient }-------------------- ");
-        Patient p = new Patient();
-        System.out.print("Entre first name : ");
-        p.setFirstname(scanner.nextLine());
-        System.out.print("Entre last name : ");
-        p.setLastname(scanner.nextLine());
-        System.out.print("Entre address : ");
-        p.setAddress(scanner.nextLine());
-        System.out.print("Entre phone number : +212-6");
-        p.setPhone(scanner.nextLine());
-        LocalDate localDate = LocalDate.now();
-        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-        p.setHospitalEntryDate(localDate);
-        System.out.println("1 - "+InsuranceType.CNSS);
-        System.out.println("2 - "+InsuranceType.RAMED);
-        System.out.println("3 - "+InsuranceType.CNOPS);
-        System.out.println("4 - "+InsuranceType.NONE);
-        while (true){
-            System.out.print("Chose your insurance : ");
-            int chose = Integer.parseInt(scanner.next());
-            if (chose >0 && chose<5){
-                InsuranceType insuranceTypev = insuranceType(chose);
-                p.setInsuranceType(insuranceTypev);
-                break;
-            }
+        while(true){
+            try {
+                System.out.println("--------------------{ Information Patient }-------------------- ");
+                Patient p = new Patient();
+                System.out.print("Entre first name : ");
+                p.setFirstname(scanner.nextLine());
+                System.out.print("Entre last name : ");
+                p.setLastname(scanner.nextLine());
+                System.out.print("Entre address : ");
+                p.setAddress(scanner.nextLine());
+                System.out.print("Entre phone number : +212-6");
+                p.setPhone(scanner.nextLine());
+                LocalDate localDate = LocalDate.now();
+                DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+                p.setHospitalEntryDate(localDate);
+                System.out.println("1 - "+InsuranceType.CNSS);
+                System.out.println("2 - "+InsuranceType.RAMED);
+                System.out.println("3 - "+InsuranceType.CNOPS);
+                System.out.println("4 - "+InsuranceType.NONE);
+                while (true){
+                    System.out.print("Chose your insurance : ");
+                    int chose = Integer.parseInt(scanner.next());
+                    if (chose >0 && chose<5){
+                        InsuranceType insuranceTypev = insuranceType(chose);
+                        p.setInsuranceType(insuranceTypev);
+                        break;
+                    }
+                }
+                System.out.print("Entre your Porte feuille : DHs  ");
+                p.setPortefeuille(Float.parseFloat(scanner.next()));
+                LocalDateTime localDate1 = LocalDateTime.now();
+                DateTimeFormatter dtf1 = DateTimeFormatter.ofPattern("ddMMyyyyhhmmss");
+                p.setAffiliationNumber(p.getFirstname().toUpperCase().charAt(0)+"_"+localDate1.format(dtf1));
+
+                return p;
+            }catch (Exception e){
+            System.out.println("Errer : "+e.getMessage());
         }
-        System.out.print("Entre your Porte feuille : DHs  ");
-        p.setPortefeuille(Float.parseFloat(scanner.next()));
-        LocalDateTime localDate1 = LocalDateTime.now();
-        DateTimeFormatter dtf1 = DateTimeFormatter.ofPattern("ddMMyyyyhhmmss");
-        p.setAffiliationNumber(p.getFirstname().toUpperCase().charAt(0)+"_"+localDate1.format(dtf1));
-        return p;
+        }
+
     }
 
     @Override

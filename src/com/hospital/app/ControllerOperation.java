@@ -5,6 +5,7 @@ import com.hospital.Impl.PatientImpl;
 import com.hospital.enumerations.StatuType;
 import com.hospital.interfaces.OperationInterface;
 import com.hospital.interfaces.PatientInterface;
+import com.hospital.interfaces.TransactionIntrf;
 import com.hospital.models.*;
 import com.sun.org.apache.bcel.internal.generic.LSTORE;
 
@@ -17,6 +18,7 @@ public class ControllerOperation {
     private List<Operation> operations = new ArrayList<>();
     private List<Patient> patients = new ArrayList<>();
     public OperationInterface op = new OperationImpl();
+    public TransactionIntrf transactionIntrf = new OperationImpl();
     private List<Transaction> transactions = new ArrayList<>();
 
 
@@ -102,6 +104,9 @@ public class ControllerOperation {
             System.out.println("\n\t\t\t\t\t-{ Welcome to Mohamed 6 Hospital }-\n\n");
             menu();
             System.out.print("Enter your chose : ");
+            try {
+
+
             chose = Integer.parseInt(scanner.next());
             switch (chose){
                 case 1 : doOperation();
@@ -156,16 +161,19 @@ public class ControllerOperation {
                     break;
 
             }
-
+            }catch (Exception e){
+                System.out.println("Errer : "+e.getMessage());
+            }
         }while (chose !=7);
     }
     public void doOperation(){
 
         Operation operation = op.addOperation(getHospital(),getDoctorList());
+
         operation.setStatu(StatuType.IN_PROGRESS);
         this.operations.add(operation);
         this.patients.add(operation.getPatient());
-        this.transactions.add(op.addTransaction(operation));
+        this.transactions.add(transactionIntrf.addTransaction(operation));
 
         System.out.println("________________________________Operation Information________________________________");
         op.showOperation(operation);

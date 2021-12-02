@@ -16,7 +16,6 @@ public interface OperationInterface {
     public void showOperations(List<Operation> operations);
     public void showOperation(Operation operations);
     public Operation addOperation(Hospital hospital, List<Doctor> doctors);
-    public Transaction addTransaction(Operation operation);
     public List<Operation> operationInProgress(List<Operation> operations);
     public List<Operation> operationSuccess(List<Operation> operations);
     public List<Operation> operationFailed(List<Operation> operations);
