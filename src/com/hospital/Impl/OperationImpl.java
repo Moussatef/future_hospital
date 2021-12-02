@@ -80,6 +80,7 @@ public class OperationImpl implements OperationInterface{
 
         PatientInterface p1 = new PatientImpl();
         Operation op = new Operation();
+        try {
         op.setDateTimeOperation(LocalDateTime.now());
         op.setStatu(StatuType.IN_PROGRESS);
         System.out.println("_________________________Doctors Available__________________________");
@@ -127,25 +128,25 @@ public class OperationImpl implements OperationInterface{
                 }
             }
         }
-
         while (true){
             System.out.print("chose doctor from list Doctors (write profession Number ) : ");
             String ID_doctor = scanner.next();
             if (getDoctor(ID_doctor,doctorList)!=null){
                 op.setDoctor(getDoctor(ID_doctor,doctorList));
                 break;
-
             }
             System.out.println("This profession Number  : "+ID_doctor+" not in list Doctors svp try again !");
         }
-
+        }catch (Exception e){
+            System.out.println("Errer : "+e.getMessage());
+        }
         return op;
     }
 
     @Override
     public Transaction addTransaction(Operation operation) {
 
-        return new Transaction();
+        return new Transaction(operation.getPrice(),operation.getCodeOperation(),operation.getPatient().getLastname().toUpperCase()+" "+operation.getPatient().getFirstname().toUpperCase());
     }
 
     @Override

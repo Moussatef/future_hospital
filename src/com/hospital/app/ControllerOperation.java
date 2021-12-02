@@ -1,8 +1,10 @@
 package com.hospital.app;
 
 import com.hospital.Impl.OperationImpl;
+import com.hospital.Impl.PatientImpl;
 import com.hospital.enumerations.StatuType;
 import com.hospital.interfaces.OperationInterface;
+import com.hospital.interfaces.PatientInterface;
 import com.hospital.models.*;
 import com.sun.org.apache.bcel.internal.generic.LSTORE;
 
@@ -15,6 +17,7 @@ public class ControllerOperation {
     private List<Operation> operations = new ArrayList<>();
     private List<Patient> patients = new ArrayList<>();
     public OperationInterface op = new OperationImpl();
+    private List<Transaction> transactions = new ArrayList<>();
 
 
     public List<Room> getRoomList(){
@@ -79,9 +82,10 @@ public class ControllerOperation {
         System.out.println("1- Add operation");
         System.out.println("2- View operations ");
         System.out.println("3- View List Doctors");
-        System.out.println("4- View List nurse");
-        System.out.println("5- View List rooms");
-        System.out.println("6- Exit");
+        System.out.println("4- View List Patients");
+        System.out.println("X- View List rooms");
+        System.out.println("6- Transactions");
+        System.out.println("7- Exit");
         System.out.println("________________________________****________________________________");
     }
     public void menuOperations(){
@@ -114,8 +118,10 @@ public class ControllerOperation {
                                  op.showOperations(op.operationInProgress(operations));
                                  break;
                              case 2 :
+                                 op.showOperations(op.operationSuccess(operations));
                                  break;
                              case 3 :
+                                 op.showOperations(op.operationFailed(operations));
                                  break;
                              case 4 :
                                  System.out.println("back to menu ");
@@ -131,12 +137,18 @@ public class ControllerOperation {
                     System.out.println("3- View List Doctors");
                     break;
                 case 4 :
-                    System.out.println("4- View List nurse");
+                    System.out.println("4- View List patient");
+                    PatientInterface p = new PatientImpl();
+                    p.showListPatient(patients);
                     break;
                 case 5 :
                     System.out.println("5- View List rooms");
                     break;
-                case 6 : System.out.println("{{{{# See you soon #}}}} ");
+                case 6 : System.out.println(" Transactions ");
+                        for (Transaction tr : transactions)
+                            System.out.println(tr.toString());
+                    break;
+                case 7 : System.out.println("{{{{# See you soon #}}}} ");
                     break;
 
                 default:
@@ -145,7 +157,7 @@ public class ControllerOperation {
 
             }
 
-        }while (chose !=6);
+        }while (chose !=7);
     }
     public void doOperation(){
 
@@ -153,6 +165,7 @@ public class ControllerOperation {
         operation.setStatu(StatuType.IN_PROGRESS);
         this.operations.add(operation);
         this.patients.add(operation.getPatient());
+        this.transactions.add(op.addTransaction(operation));
 
         System.out.println("________________________________Operation Information________________________________");
         op.showOperation(operation);

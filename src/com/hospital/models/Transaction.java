@@ -63,4 +63,15 @@ public class Transaction {
     public void setNamePatient(String namePatient) {
         this.namePatient = namePatient;
     }
+
+    @Override
+    public String toString() {
+        return "Transaction{ \n" +
+                "* Reference : " + reference + '\n' +
+                "* dateTimeTransaction : " + dateTimeTransaction.format(DateTimeFormatter.ofPattern("yyyy-MM-dd- hh:mm"))+ '\n' +
+                "* TOTAL =" + total + '\n' +
+                "* Operation Reference : " + refOperation + '\n' +
+                "* Patient name : " + namePatient  +
+                " }";
+    }
 }
