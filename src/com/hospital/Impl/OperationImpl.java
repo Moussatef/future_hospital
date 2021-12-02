@@ -30,6 +30,8 @@ public class OperationImpl implements OperationInterface{
 
     @Override
     public void showOperations(List<Operation> operations) {
+        for(Operation op: operations)
+            showOperation(op);
 
     }
     @Override
@@ -39,6 +41,7 @@ public class OperationImpl implements OperationInterface{
             rembourse = (operation.getPrice() * percentageCNSS ) / 100;
         if(operation.getPatient().getInsuranceType().toString().equals("CNOPS"))
             rembourse = operation.getPrice();
+        System.out.println("----------------------------OPERATION INFORMATION----------------------------------");
         System.out.println("Code Operation    : "+operation.getCodeOperation());
         System.out.println("Description       : "+operation.getDescription()+"\t Date Operation    : "+operation.getDateTimeOperation().format(DateTimeFormatter.ofPattern("dd-MM-yyyy hh:mm")));
         System.out.println("Price             : "+operation.getPrice() );
@@ -46,10 +49,11 @@ public class OperationImpl implements OperationInterface{
         System.out.println("Profession Number : "+operation.getDoctor().getProfessionNumber() + "\t Doctor Name       : "+operation.getDoctor().getLastname()+" "+operation.getDoctor().getFirstname());
         System.out.println("__________________________________________________________________________________");
         System.out.println("________________________________Patient Information_______________________________");
-        System.out.println("Affiliation Number: "+operation.getPatient().getAffiliationNumber()+"\t Patient Name      : "+operation.getPatient().getLastname().toUpperCase() +" "+ operation.getPatient().getFirstname().toUpperCase());
+        System.out.println("Affiliation Number: "+operation.getPatient().getAffiliationNumber()+"\t Patient Name    : "+operation.getPatient().getLastname().toUpperCase() +" "+ operation.getPatient().getFirstname().toUpperCase());
         System.out.println("InsuranceType     : "+operation.getPatient().getInsuranceType());
-        System.out.println("Insurance reimbursed: "+rembourse +"DHs");
-        System.out.println("----------------------------------------------------------------------------------");
+        System.out.println("Insurance reimbursed: "+rembourse +"DHs"+"\t\t\t status    : "+operation.getStatu().toString());
+
+        System.out.println("-----------------------------------------------------------------------------------");
     }
 
     public Doctor getDoctor(String ID,List<Doctor> d){
@@ -94,7 +98,7 @@ public class OperationImpl implements OperationInterface{
         System.out.print("Price of operation : ");
         op.setPrice(Float.parseFloat(scanner.nextLine()));
         while(true){
-            if(op.getPatient().getPortefeuille() < op.getPrice()){
+            if(op.getPatient().getPortefeuille() < op.getPrice() && !op.getPatient().getInsuranceType().toString().equals("RAMED")){
                 System.out.println("warning !!!! the portefeuille is not enough !! ");
                 System.out.print("Add enough money in yor portefeuille : ");
                 float addMoney = op.getPatient().getPortefeuille() + Float.parseFloat(scanner.next());
@@ -103,13 +107,25 @@ public class OperationImpl implements OperationInterface{
             }
             break;
         }
+
         float oldPorteValue = op.getPatient().getPortefeuille();
         float newPorteValue = op.getPatient().getPortefeuille() - op.getPrice();
         if(!op.getPatient().getInsuranceType().toString().equals("RAMED"))
             op.getPatient().setPortefeuille(newPorteValue);
         else{
-            float newPorteValueR = op.getPatient().getPortefeuille() -  ( (op.getPrice() * percentageRAMED ) / 100 );
-            op.getPatient().setPortefeuille(newPorteValueR);
+            while (true) {
+                float newPorteValueR = op.getPatient().getPortefeuille() - ((op.getPrice() * percentageRAMED) / 100);
+                if (newPorteValueR > 0) {
+                    op.getPatient().setPortefeuille(newPorteValueR);
+                    break;
+                }
+                else {
+                    System.out.println("warning !!!! the portefeuille is not enough !! ");
+                    System.out.print("Add enough money in yor portefeuille : ");
+                    float addMoney = op.getPatient().getPortefeuille() + Float.parseFloat(scanner.next());
+                    op.getPatient().setPortefeuille(addMoney);
+                }
+            }
         }
 
         while (true){
@@ -124,6 +140,12 @@ public class OperationImpl implements OperationInterface{
         }
 
         return op;
+    }
+
+    @Override
+    public Transaction addTransaction(Operation operation) {
+
+        return new Transaction();
     }
 
     @Override

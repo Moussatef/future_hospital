@@ -1,6 +1,7 @@
 package com.hospital.app;
 
 import com.hospital.Impl.OperationImpl;
+import com.hospital.enumerations.StatuType;
 import com.hospital.interfaces.OperationInterface;
 import com.hospital.models.*;
 import com.sun.org.apache.bcel.internal.generic.LSTORE;
@@ -11,6 +12,9 @@ import java.util.Scanner;
 
 public class ControllerOperation {
     Scanner scanner = new Scanner(System.in);
+    private List<Operation> operations = new ArrayList<>();
+    private List<Patient> patients = new ArrayList<>();
+    public OperationInterface op = new OperationImpl();
 
 
     public List<Room> getRoomList(){
@@ -64,7 +68,7 @@ public class ControllerOperation {
 
 
         List<Doctor> doctorList = new ArrayList<>();
-        doctorList.add(new Doctor("Yassine","Bissaoui","692698656","Marrakeche","NM_986298697",new TimeSlot(8,12),50_000,nurseList2));
+        doctorList.add(new Doctor("Hamza","Jebran","692698946","Casa","NM_986298697",new TimeSlot(8,12),50_000,nurseList2));
         doctorList.add(new Doctor("Yassine","Bissaoui","692698656","Marrakeche","NM_986009697",new TimeSlot(8,23),10_000,nurseList3));
         doctorList.add(new Doctor("OTHMAN","MOUSSATEF","637274172","SAFI","NM_000978",new TimeSlot(10,23),100_000,nurseList1));
 
@@ -107,7 +111,7 @@ public class ControllerOperation {
                          ch = Integer.parseInt(scanner.next());
                          switch (ch){
                              case 1 :
-
+                                 op.showOperations(op.operationInProgress(operations));
                                  break;
                              case 2 :
                                  break;
@@ -120,8 +124,6 @@ public class ControllerOperation {
                                  System.out.println("This chose not in menu !! try again");
                                  break;
                          }
-
-
                     }while (ch != 4);
 
                     break;
@@ -146,8 +148,12 @@ public class ControllerOperation {
         }while (chose !=6);
     }
     public void doOperation(){
-        OperationInterface op = new OperationImpl();
+
         Operation operation = op.addOperation(getHospital(),getDoctorList());
+        operation.setStatu(StatuType.IN_PROGRESS);
+        this.operations.add(operation);
+        this.patients.add(operation.getPatient());
+
         System.out.println("________________________________Operation Information________________________________");
         op.showOperation(operation);
 
