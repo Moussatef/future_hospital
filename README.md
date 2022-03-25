@@ -1,4 +1,4 @@
-# Hospital_BF
+# La médecine du futur
 ## Contexte du projet
 
 Vous avez lancé une Start-Up dans la ville de SAFI, pour le besoin d’automatiser les processus dans les domaines étatiques, le marché de la santé vous plait, et vous avez accroché une convention de la création d’un projet digital au sein de l’hôpital Med 5.
